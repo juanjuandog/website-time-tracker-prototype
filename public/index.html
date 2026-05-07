@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>网页使用时间监控</title>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div class="brandBlock">
+          <div class="eyebrow">
+            <span id="statusDot" class="statusDot"></span>
+            <span id="statusText">Daily Web Time</span>
+          </div>
+          <h1>今天的网页时间</h1>
+          <p id="subtitle">把浏览过的网站和页面，整理成一份温柔的时间记录。</p>
+        </div>
+        <div class="actions">
+          <div class="viewTabs" aria-label="统计范围">
+            <button class="viewTab active" data-view="day" type="button">今日</button>
+            <button class="viewTab" data-view="week" type="button">本周</button>
+            <button class="viewTab" data-view="month" type="button">本月</button>
+          </div>
+          <input id="datePicker" type="date" />
+          <button id="toggleBtn">暂停</button>
+          <a id="exportMd" class="button" href="/api/export.md">导出 Markdown</a>
+        </div>
+      </header>
+
+      <section id="permissionWarning" class="warning hidden"></section>
+
+      <section class="heroGrid">
+        <article class="focusCard">
+          <div id="focusLabel" class="focusLabel">今日总时长</div>
+          <strong id="totalTime">0 分钟</strong>
+          <div class="focusMeta">
+            <span id="currentSite">等待采样</span>
+            <span id="currentTitle">-</span>
+          </div>
+          <div class="chartStack">
+            <div class="chartBlock chartPanelBlock">
+              <div class="chartTitle">网站占比</div>
+              <div id="pieChart" class="pieChart" aria-label="网站使用时间占比">
+                <svg id="donutSvg" class="donutSvg" viewBox="0 0 240 240" role="img" aria-label="网站使用时间占比"></svg>
+                <div class="chartCenter">
+                  <strong id="chartTotal">0 分钟</strong>
+                  <span id="chartLabel">全部网站</span>
+                </div>
+              </div>
+            </div>
+            <div class="chartBlock chartPanelBlock">
+              <div class="chartTitle">分类占比</div>
+              <div id="categoryPieChart" class="pieChart categoryPieChart" aria-label="分类使用时间占比">
+                <svg id="categoryDonutSvg" class="donutSvg" viewBox="0 0 240 240" role="img" aria-label="分类使用时间占比"></svg>
+                <div class="chartCenter">
+                  <strong id="categoryChartTotal">0 分钟</strong>
+                  <span id="categoryChartLabel">全部分类</span>
+                </div>
+              </div>
+              <div id="categoryLegend" class="chartLegend compactLegend"></div>
+            </div>
+          </div>
+        </article>
+
+        <aside class="sideStack">
+          <section class="panel statPanel">
+            <div class="panelHead">
+              <h2>今日状态</h2>
+            </div>
+            <div class="statRows">
+              <div>
+                <span>范围</span>
+                <strong id="dateText">-</strong>
+              </div>
+              <div>
+                <span>网站数量</span>
+                <strong id="domainCount">0 个</strong>
+              </div>
+              <div>
+                <span>页面数量</span>
+                <strong id="pageCount">0 个</strong>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel chartPanel">
+            <div class="panelHead">
+              <h2>网站占比</h2>
+            </div>
+            <div id="chartLegend" class="chartLegend"></div>
+          </section>
+
+        </aside>
+      </section>
+
+      <section class="grid">
+        <div class="panel">
+          <div class="panelHead">
+            <h2>网站汇总</h2>
+            <span>Top 12</span>
+          </div>
+          <div id="domainList" class="list"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panelHead">
+            <h2>具体网页</h2>
+            <span>Top 12</span>
+          </div>
+          <div id="pageList" class="list"></div>
+        </div>
+      </section>
+
+      <section class="panel categoryRulesPanel">
+        <div class="panelHead">
+          <h2>分类规则</h2>
+          <span>按域名关键词归档</span>
+        </div>
+        <form id="categoryRuleForm" class="ruleForm">
+          <input id="rulePattern" type="text" placeholder="例如 leetcode.com" autocomplete="off" />
+          <select id="ruleCategory" aria-label="选择分类"></select>
+          <button type="submit">添加</button>
+        </form>
+        <details class="ruleDetails">
+          <summary>查看已保存规则</summary>
+          <div id="categoryRules" class="ruleChips"></div>
+        </details>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

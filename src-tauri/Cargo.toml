@@ -1,0 +1,12 @@
+[package]
+name = "web-time-tracker"
+version = "0.1.0"
+description = "Local website time tracker"
+authors = ["local"]
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["macos-private-api", "tray-icon"] }

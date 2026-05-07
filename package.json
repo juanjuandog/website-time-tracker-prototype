@@ -1,0 +1,16 @@
+{
+  "name": "website-time-tracker-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "companion": "PATH=\"$HOME/.cargo/bin:$PATH\" RUSTC=\"$HOME/.cargo/bin/rustc\" tauri dev",
+    "desktop": "PATH=\"$HOME/.cargo/bin:$PATH\" RUSTC=\"$HOME/.cargo/bin/rustc\" tauri dev",
+    "companion:build": "PATH=\"$HOME/.cargo/bin:$PATH\" RUSTC=\"$HOME/.cargo/bin/rustc\" tauri build",
+    "desktop:build": "PATH=\"$HOME/.cargo/bin:$PATH\" RUSTC=\"$HOME/.cargo/bin/rustc\" tauri build"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.11.0"
+  }
+}
