@@ -21,7 +21,8 @@
         "alwaysOnTop": true,
         "skipTaskbar": true,
         "visible": false,
-        "transparent": true
+        "transparent": true,
+        "acceptFirstMouse": true
       }
     ],
     "security": {

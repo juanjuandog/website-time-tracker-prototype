@@ -93,6 +93,11 @@
         background: #e8845c;
         color: #fffaf2;
       }
+
+      button:disabled {
+        cursor: wait;
+        opacity: 0.56;
+      }
     </style>
   </head>
   <body>
@@ -111,14 +116,29 @@
       };
       let target = null;
       let targetKey = "";
+      let saving = false;
+
+      async function fetchJson(url, options = {}) {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 3500);
+        try {
+          const res = await fetch(url, { ...options, signal: controller.signal });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return await res.json();
+        } finally {
+          clearTimeout(timeout);
+        }
+      }
 
       async function refresh() {
+        if (saving) return;
         try {
-          const res = await fetch(`${API_BASE}/api/state`);
-          const data = await res.json();
-          target = data.unknownCategoryTarget;
+          const data = await fetchJson(`${API_BASE}/api/category-target`);
+          target = data.target;
           if (!target) {
             targetKey = "";
+            els.name.textContent = "等待检测";
+            els.actions.innerHTML = "";
             return;
           }
           const nextKey = `${target.type}:${target.key}`;
@@ -138,18 +158,38 @@
       }
 
       async function saveRule(category) {
-        if (!target) return;
-        await fetch(`${API_BASE}/api/category-rule`, {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({
-            type: target.type,
-            pattern: target.key,
-            category
-          })
+        if (!target || saving) return;
+        saving = true;
+        const buttons = [...els.actions.querySelectorAll("button")];
+        buttons.forEach((button) => {
+          button.disabled = true;
+          if (button.dataset.category === category) button.textContent = "保存中";
         });
-        targetKey = "";
-        await refresh();
+        const selectedTarget = target;
+        try {
+          await fetchJson(`${API_BASE}/api/category-rule`, {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({
+              type: selectedTarget.type,
+              pattern: selectedTarget.key,
+              category
+            })
+          });
+          target = null;
+          targetKey = "";
+          els.name.textContent = `已归类到${category}`;
+          els.actions.innerHTML = "";
+        } catch {
+          els.name.textContent = "保存失败，重试一下";
+          buttons.forEach((button) => {
+            button.disabled = false;
+            button.textContent = button.dataset.category;
+          });
+        } finally {
+          saving = false;
+          setTimeout(refresh, 350);
+        }
       }
 
       refresh();

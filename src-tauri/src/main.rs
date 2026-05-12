@@ -50,13 +50,28 @@ fn start_prompt_monitor(app: tauri::AppHandle) {
         loop {
             thread::sleep(Duration::from_millis(1200));
             let Ok(output) = Command::new("curl")
-                .args(["-s", "http://127.0.0.1:4174/api/state"])
+                .args(["-s", "--max-time", "2", "http://127.0.0.1:4174/api/category-target"])
                 .output()
             else {
+                if visible {
+                    if let Some(window) = app.get_webview_window("categoryPrompt") {
+                        let _ = window.hide();
+                    }
+                    visible = false;
+                }
                 continue;
             };
+            if !output.status.success() {
+                if visible {
+                    if let Some(window) = app.get_webview_window("categoryPrompt") {
+                        let _ = window.hide();
+                    }
+                    visible = false;
+                }
+                continue;
+            }
             let body = String::from_utf8_lossy(&output.stdout);
-            let should_show = body.contains("\"unknownCategoryTarget\":{");
+            let should_show = body.contains("\"target\":{");
             if should_show == visible {
                 continue;
             }

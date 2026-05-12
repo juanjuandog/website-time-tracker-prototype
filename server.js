@@ -17,6 +17,7 @@ const SAMPLE_MS = 2000;
 const IDLE_CLOSE_MS = 8000;
 const IDLE_THRESHOLD_MS = 5 * 60 * 1000;
 const MAX_SAMPLE_GAP_MS = 30 * 1000;
+const SQLITE_MAX_BUFFER = 64 * 1024 * 1024;
 const DEFAULT_CATEGORIES = ["学习", "娱乐", "社交", "其他", "未分类"];
 const DEFAULT_CATEGORY_RULES = [];
 
@@ -133,7 +134,7 @@ function normalizeCategoryRules(input, categories = DEFAULT_CATEGORIES) {
 
 async function dbText(sql) {
   return new Promise((resolve, reject) => {
-    execFile("sqlite3", [DB_FILE, sql], { timeout: 10000 }, (error, stdout, stderr) => {
+    execFile("sqlite3", [DB_FILE, sql], { maxBuffer: SQLITE_MAX_BUFFER, timeout: 10000 }, (error, stdout, stderr) => {
       if (error) {
         reject(new Error((stderr || error.message).trim()));
         return;
@@ -149,7 +150,7 @@ async function dbExec(sql) {
 
 async function dbJson(sql) {
   return new Promise((resolve, reject) => {
-    execFile("sqlite3", ["-json", DB_FILE, sql], { timeout: 10000 }, (error, stdout, stderr) => {
+    execFile("sqlite3", ["-json", DB_FILE, sql], { maxBuffer: SQLITE_MAX_BUFFER, timeout: 10000 }, (error, stdout, stderr) => {
       if (error) {
         reject(new Error((stderr || error.message).trim()));
         return;
@@ -783,6 +784,10 @@ const server = http.createServer(async (req, res) => {
     });
     return;
   }
+  if (url.pathname === "/api/category-target" && req.method === "GET") {
+    sendJson(res, { target: unknownCategoryTarget() });
+    return;
+  }
   if (url.pathname === "/api/settings") {
     if (req.method === "GET") {
       sendJson(res, state.settings);
@@ -862,10 +867,20 @@ function csvCell(value) {
 }
 
 await ensureStore();
-setInterval(async () => {
-  if (state.running) await sampleActivity();
-}, SAMPLE_MS);
-if (state.running) await sampleActivity();
+
+let sampling = false;
+async function sampleOnce() {
+  if (!state.running || sampling) return;
+  sampling = true;
+  try {
+    await sampleActivity();
+  } finally {
+    sampling = false;
+  }
+}
+
+setInterval(sampleOnce, SAMPLE_MS);
+await sampleOnce();
 
 let serverPort = await findAvailablePort(START_PORT);
 server.listen(serverPort, () => {
