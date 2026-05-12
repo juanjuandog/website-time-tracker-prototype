@@ -40,6 +40,6 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
-    "resources": ["../server.js"]
+    "resources": ["../server.js", "../public"]
   }
 }
