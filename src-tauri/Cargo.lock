@@ -2049,6 +2049,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "04744f49eae99ab78e0d5c0b603ab218f515ea8cfe5a456d7629ad883a3b6e7d"
 
 [[package]]
+name = "orbitlog"
+version = "0.1.0"
+dependencies = [
+ "tauri",
+ "tauri-build",
+]
+
+[[package]]
 name = "pango"
 version = "0.18.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3873,14 +3881,6 @@ checksum = "2eadbac71025cd7b0834f20d1fe8472e8495821b4e9801eb0a60bd1f19827602"
 dependencies = [
  "js-sys",
  "wasm-bindgen",
-]
-
-[[package]]
-name = "web-time-tracker"
-version = "0.1.0"
-dependencies = [
- "tauri",
- "tauri-build",
 ]
 
 [[package]]

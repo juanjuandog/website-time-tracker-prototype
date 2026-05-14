@@ -257,7 +257,8 @@ function normalizeUrl(rawUrl) {
 }
 
 function shouldIgnoreSample(sample) {
-  if (String(sample.app || "").toLowerCase().includes("web-time-tracker")) return true;
+  const appName = String(sample.app || "").toLowerCase();
+  if (appName.includes("web-time-tracker") || appName.includes("orbitlog")) return true;
   if (sample.type !== "web") return false;
   const haystack = [sample.domain, sample.url, sample.title].join(" ").toLowerCase();
   return state.settings.ignoredPatterns.some((pattern) => haystack.includes(pattern));

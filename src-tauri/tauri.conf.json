@@ -1,8 +1,8 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "Web Time Tracker",
+  "productName": "OrbitLog",
   "version": "0.1.0",
-  "identifier": "com.local.webtimetracker",
+  "identifier": "app.orbitlog.desktop",
   "build": {
     "devUrl": "http://localhost:4174",
     "frontendDist": "../public"

@@ -91,7 +91,7 @@ fn start_prompt_monitor(app: tauri::AppHandle) {
 
 fn launch_agent_path() -> Option<PathBuf> {
     let home = env::var_os("HOME")?;
-    Some(PathBuf::from(home).join("Library/LaunchAgents/com.local.webtimetracker.plist"))
+    Some(PathBuf::from(home).join("Library/LaunchAgents/app.orbitlog.desktop.plist"))
 }
 
 fn current_app_bundle() -> Option<PathBuf> {
@@ -124,7 +124,7 @@ fn toggle_autostart() {
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>com.local.webtimetracker</string>
+  <string>app.orbitlog.desktop</string>
   <key>ProgramArguments</key>
   <array>
     <string>/usr/bin/open</string>
@@ -197,7 +197,7 @@ fn main() {
             let menu = Menu::with_items(app, &[&show, &pause, &autostart, &quit])?;
 
             TrayIconBuilder::new()
-                .tooltip("网页时间监控")
+                .tooltip("OrbitLog")
                 .menu(&menu)
                 .show_menu_on_left_click(true)
                 .on_menu_event(|app, event| match event.id().as_ref() {
