@@ -30,6 +30,8 @@ OrbitLog watches your active browser tab or frontmost app, turns it into daily /
 | --- | --- |
 | ![OrbitLog charts](docs/screenshots/dashboard-charts.png) | ![OrbitLog summaries](docs/screenshots/dashboard-lists.png) |
 
+> A short demo GIF is planned. See [Screenshot Checklist](docs/SCREENSHOTS.md) for the recording plan.
+
 ## Highlights
 
 - **Local-first by default**: activity is stored in a local SQLite database under `data/activity.sqlite`.
@@ -81,6 +83,14 @@ Requirements:
 - Node.js
 - Rust toolchain, only needed for the Tauri companion or desktop build
 
+## Download Beta
+
+The macOS beta build is published from GitHub Releases:
+
+[Download OrbitLog v0.1.0](https://github.com/juanjuandog/orbitlog/releases/tag/v0.1.0)
+
+The app is not signed yet, so macOS may show an additional security prompt. For the smoothest experience today, technical users can still run OrbitLog from source.
+
 Install dependencies:
 
 ```bash
@@ -104,6 +114,8 @@ Start the desktop classification companion:
 ```bash
 npm run companion
 ```
+
+For more details, see the [Setup Guide](docs/SETUP.md).
 
 ## Build Desktop App
 
