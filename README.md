@@ -1,6 +1,6 @@
 # OrbitLog
 
-Local-first time tracking for the websites and apps you actually use.
+A local-first macOS time journal that turns your websites and apps into daily, weekly, and monthly reports.
 
 OrbitLog is a macOS time journal that watches your active browser tab or frontmost app, turns it into daily / weekly / monthly summaries, and keeps everything on your own machine. It is built for people who want a readable record of where their time went without sending browsing data to a third-party service.
 
@@ -8,13 +8,11 @@ OrbitLog is a macOS time journal that watches your active browser tab or frontmo
 
 ## Preview
 
-Screenshots are coming next. Recommended files:
+![OrbitLog dashboard](docs/screenshots/dashboard.png)
 
-| View | Path |
+| Website and category charts | Website and page summaries |
 | --- | --- |
-| Dashboard | `docs/screenshots/dashboard.png` |
-| Category prompt | `docs/screenshots/category-prompt.png` |
-| Markdown report | `docs/screenshots/markdown-report.png` |
+| ![OrbitLog charts](docs/screenshots/dashboard-charts.png) | ![OrbitLog summaries](docs/screenshots/dashboard-lists.png) |
 
 ## Highlights
 
@@ -24,6 +22,26 @@ Screenshots are coming next. Recommended files:
 - **Manual category rules**: classify unknown websites or apps into learning, entertainment, social, or other.
 - **Desktop companion prompt**: a lightweight always-on-top classification window works outside the dashboard.
 - **Warm dashboard UI**: browse time by day, week, month, website, page, and category.
+
+## Why OrbitLog?
+
+Most time trackers are either too broad, too opaque, or too cloud-dependent. OrbitLog is intentionally small:
+
+- It focuses on the websites, pages, and apps you actually touch.
+- It keeps the raw data on your machine.
+- It exports human-readable Markdown instead of locking reports inside an app.
+- It lets you classify activity manually instead of guessing with AI.
+- It works as a local dashboard, with a tiny desktop companion only when needed.
+
+## Who Is It For?
+
+OrbitLog is useful if you:
+
+- want a local record of study, work, social, and entertainment time
+- write daily or weekly reviews and want Markdown-friendly summaries
+- prefer local-first tools over hosted productivity dashboards
+- want more detail than Screen Time without sending browsing history to a third party
+- enjoy small, hackable desktop tools
 
 ## How It Works
 
@@ -142,12 +160,41 @@ See [Privacy](docs/PRIVACY.md) for more detail.
 
 ## Roadmap
 
-- Add polished screenshots and a short demo GIF.
-- Package a signed macOS beta release.
-- Improve first-run permission guidance.
-- Add safer backup / reset tools for local data.
-- Add optional browser extension support for Firefox and more reliable URL detection.
-- Add Windows support through native foreground-window tracking.
+- [x] Local dashboard
+- [x] SQLite storage
+- [x] Daily / weekly / monthly views
+- [x] Markdown export
+- [x] Manual category rules
+- [x] Desktop companion prompt
+- [x] Public README screenshots
+- [ ] Short demo GIF
+- [ ] Signed macOS beta release
+- [ ] Better first-run permission guidance
+- [ ] Safer backup / reset tools for local data
+- [ ] Optional browser extension support for Firefox
+- [ ] Windows support through native foreground-window tracking
+
+## FAQ
+
+### Does OrbitLog upload my browsing history?
+
+No. OrbitLog stores activity locally in SQLite and does not include a hosted sync or analytics service.
+
+### Why does macOS ask for permissions?
+
+OrbitLog needs Accessibility and Automation permissions to read the frontmost app and supported browser tab metadata. Without those permissions, it cannot reliably detect the current website.
+
+### Does it support Windows?
+
+Not yet. The current tracker uses macOS AppleScript. Windows support would need a separate native foreground-window and browser integration.
+
+### Can it read Firefox URLs?
+
+Not yet. Firefox usually needs a browser extension or another integration path for reliable URL detection.
+
+### Where is my data stored?
+
+Activity data is stored in `data/activity.sqlite`. Local settings are stored in `data/settings.json`.
 
 ## Development
 
