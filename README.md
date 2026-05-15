@@ -1,10 +1,26 @@
+<div align="center">
+
 # OrbitLog
 
-A local-first macOS time journal that turns your websites and apps into daily, weekly, and monthly reports.
+### A local-first macOS time journal for websites and apps
 
-OrbitLog is a macOS time journal that watches your active browser tab or frontmost app, turns it into daily / weekly / monthly summaries, and keeps everything on your own machine. It is built for people who want a readable record of where their time went without sending browsing data to a third-party service.
+Turn your browsing and app activity into readable daily, weekly, and monthly reports without sending your history to a cloud service.
 
-> Status: beta. Useful for technical users on macOS, still being polished for a wider release.
+![release](https://img.shields.io/badge/release-v0.1.0-f08f72)
+![platform](https://img.shields.io/badge/platform-macOS-f0c66e)
+![storage](https://img.shields.io/badge/storage-local%20SQLite-79c98c)
+![license](https://img.shields.io/badge/license-MIT-78a8d8)
+![status](https://img.shields.io/badge/status-beta-b59ae0)
+
+[English](README.md) | [简体中文](README.zh-CN.md)
+
+</div>
+
+---
+
+OrbitLog watches your active browser tab or frontmost app, turns it into daily / weekly / monthly summaries, and keeps everything on your own machine. It is built for people who want a readable record of where their time went without handing browsing data to a third-party service.
+
+> OrbitLog is beta software. It works well for technical macOS users, while packaging, permission guidance, and browser coverage are still being polished.
 
 ## Preview
 
